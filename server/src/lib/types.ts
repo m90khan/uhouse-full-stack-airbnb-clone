@@ -1,5 +1,6 @@
 import { Collection, ObjectId } from 'mongodb';
 
+// type definition for database
 export interface Listing {
   _id: ObjectId;
   title: string;
