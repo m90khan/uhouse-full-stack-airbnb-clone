@@ -20,7 +20,6 @@ export const listingResolvers: IResolvers = {
     /*
       Apollo server : args types arenot explicitly defined
 root:   The object returned from the resolver on the parent ﬁeld. set to undefined 
- we haven't defined it 
       */
     deleteListing: async (
       _root: undefined,
