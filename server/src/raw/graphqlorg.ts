@@ -11,6 +11,7 @@ import { listings } from './listings';
 /*
 first define a object type
 GraphQLNonNull : to must not return null
+GraphQLObjectType : use to represent all the graphql types
 */
 const Listing = new GraphQLObjectType({
   name: 'Listing',

@@ -13,15 +13,12 @@ const mount = async (app: Application) => {
   const db = await connectDatabase();
   /* 
   1- apollo server instant
-  const server = new ApolloServer({typeDefs: `` , resolvers: {}});
-  
-  typeDefs: String that represents the entire GraphQL schema.
+   typeDefs: String that represents the entire GraphQL schema.
   resolvers: Map of functions that implement the schema.
-
   context : an object shared by all resolvers. apolloserver contructor gets called with every request
   */
   const server = new ApolloServer({ typeDefs, resolvers, context: () => ({ db }) });
-  // apolloserver midllerware to work with express middleware and path for graphql api
+  // apolloserver midllerware to work with express middleware and path / endpoint for graphql api url
   server.applyMiddleware({ app, path: '/api' });
   app.listen(port, () => {
     console.log('DB Connected @ localhost:' + port);
