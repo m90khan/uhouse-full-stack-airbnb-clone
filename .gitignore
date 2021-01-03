@@ -18,7 +18,7 @@ server/.env.local
 server/.env.development.local
 server/.env.test.local
 server/.env.production.local
-
+server/.eslintcache
 server/npm-debug.log*
 server/yarn-debug.log*
 server/yarn-error.log*
@@ -31,6 +31,8 @@ client/.pnp.js
 # testing
 client/coverage
 
+client/.eslintcache
+.eslintcache
 # production
 client/build
 
