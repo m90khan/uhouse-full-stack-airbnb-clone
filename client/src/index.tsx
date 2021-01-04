@@ -1,12 +1,21 @@
 import React from 'react';
 import { render } from 'react-dom';
-import './index.css';
+import ApolloClient from 'apollo-boost';
+import { ApolloProvider } from 'react-apollo';
+// import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import './styles/index.css';
+
+const client = new ApolloClient({
+  uri: '/api',
+});
 
 render(
   <React.StrictMode>
-    <App />
+    <ApolloProvider client={client}>
+      <App />
+    </ApolloProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
