@@ -1,5 +1,5 @@
 {
-  "name": "bnbclone-v1",
+  "name": "airhouse-server",
   "version": "0.1.0",
   "description": "Server for airbnb clone app",
   "main": "index.ts",

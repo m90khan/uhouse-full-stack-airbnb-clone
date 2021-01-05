@@ -24,3 +24,10 @@ render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+
+/*
+Apollo boost : configuration package to setup apollo client
+react-apollo : view layer for react to interact with graphQl api
+ApolloProvider: provide apollo client contxt everywhere in <APP />
+Apollo CLI : to generate typing from the graphql schema
+*/

@@ -1,10 +1,27 @@
 import React from 'react';
-import { Listings } from './sections';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Home, Host, Listing, NotFound, User, Listings } from './sections';
+
+const AppRouter = () => {
+  return (
+    // Router =  parent router
+    <Router>
+      <Switch>
+        <Route path='/' component={Home} exact />
+        <Route path='/host' component={Host} exact />
+        <Route path='/listing/:id' component={Listing} exact />
+        <Route path='/listings/:location?' component={Listings} exact />
+        <Route path='/user/:id' component={User} exact />
+        <Route component={NotFound} />
+      </Switch>
+    </Router>
+  );
+};
+
 function App() {
   return (
     <div className='App'>
-      <h1>Hello</h1>
-      <Listings title='AirHouse CLoner' />
+      <AppRouter />
     </div>
   );
 }
