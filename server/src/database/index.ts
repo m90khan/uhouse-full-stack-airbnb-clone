@@ -1,5 +1,5 @@
 import { MongoClient } from 'mongodb';
-import { Database } from '../lib/types';
+import { Database, User, Listing, Booking } from '../lib/types';
 // Connection URL
 const DB = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_USER_PASSWORD}@${process.env.DB_CLUSTER}.mongodb.net`;
 /*
@@ -13,6 +13,9 @@ export const connectDatabase = async (): Promise<Database> => {
 
   const db = client.db('airhousedb');
   return {
-    listings: db.collection('test_listings'),
+    // <Type>  : returns data as expected
+    bookings: db.collection<Booking>('bookings'),
+    listings: db.collection<Listing>('listings'),
+    users: db.collection<User>('users'),
   };
 };
