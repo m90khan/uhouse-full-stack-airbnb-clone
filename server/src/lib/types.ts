@@ -2,6 +2,14 @@ import { Collection, ObjectId } from 'mongodb';
 
 // Type definitions for database
 
+export interface Viewer {
+  _id?: string;
+  token?: string;
+  avatar?: string;
+  walletId?: string;
+  didRequest: boolean;
+}
+
 export interface Booking {
   _id: ObjectId;
   listing: ObjectId; //   1-1 booking -> listing
@@ -51,18 +59,21 @@ Handling dates for bookings using index . if a house is boked then listing not p
     }
   }
 */
+
 export interface User {
   _id: string;
   token: string;
   name: string;
   avatar: string;
   contact: string;
-  walletId?: string | undefined; // paid
+  walletId?: string;
   income: number;
   // 1-many : user -> bookings
+
   bookings: ObjectId[];
   listings: ObjectId[];
 }
+
 export interface Database {
   bookings: Collection<Booking>;
   listings: Collection<Listing>;

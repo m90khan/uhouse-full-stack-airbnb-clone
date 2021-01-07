@@ -1,7 +1,9 @@
 import React from 'react';
 import { render } from 'react-dom';
 import ApolloClient from 'apollo-boost';
-import { ApolloProvider } from 'react-apollo';
+// import { ApolloProvider } from 'react-apollo';
+import { ApolloProvider } from '@apollo/react-hooks';
+
 // import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -12,11 +14,9 @@ const client = new ApolloClient({
 });
 
 render(
-  <React.StrictMode>
-    <ApolloProvider client={client}>
-      <App />
-    </ApolloProvider>
-  </React.StrictMode>,
+  <ApolloProvider client={client}>
+    <App />
+  </ApolloProvider>,
   document.getElementById('root')
 );
 

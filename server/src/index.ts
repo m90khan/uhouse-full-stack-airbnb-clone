@@ -4,11 +4,13 @@ import express, { Application } from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import { typeDefs, resolvers } from './graphql';
 import { connectDatabase } from './database/index';
+import cookieParser from 'cookie-parser';
 const port = process.env.PORT;
 
 const mount = async (app: Application) => {
   app.use(express.urlencoded({ extended: true, limit: '10kb' }));
   app.use(express.json({ limit: '10kb' })); // limit body data
+  app.use(cookieParser(process.env.SECRET));
   // resolve functions will interact with the db variable
   const db = await connectDatabase();
   /* 
@@ -17,7 +19,11 @@ const mount = async (app: Application) => {
   resolvers: Map of functions that implement the schema.
   context : an object shared by all resolvers. apolloserver contructor gets called with every request
   */
-  const server = new ApolloServer({ typeDefs, resolvers, context: () => ({ db }) });
+  const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+    context: ({ req, res }) => ({ db, req, res }),
+  });
   // apolloserver midllerware to work with express middleware and path / endpoint for graphql api url
   server.applyMiddleware({ app, path: '/api' });
   app.listen(port, () => {
