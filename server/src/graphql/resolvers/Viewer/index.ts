@@ -106,7 +106,7 @@ const logInViaCookie = async (
     { returnOriginal: false }
   );
 
-  let viewer = updatedRes.value;
+  const viewer = updatedRes.value;
   if (!viewer) {
     res.clearCookie('viewer', cookieOptions);
   }

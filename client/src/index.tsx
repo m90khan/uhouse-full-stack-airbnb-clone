@@ -9,8 +9,22 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './styles/index.css';
 
+/*
+1-instantiate the ApolloClient constructor with api url
+2- the request function will send the csrf token on every request
+*/
+
 const client = new ApolloClient({
   uri: '/api',
+
+  request: async (operation) => {
+    const token = sessionStorage.getItem('token');
+    operation.setContext({
+      headers: {
+        'X-CSRF-TOKEN': token || '',
+      },
+    });
+  },
 });
 
 render(

@@ -1,6 +1,6 @@
 import { Collection, ObjectId } from 'mongodb';
 
-// Type definitions for database
+// Type definitions for the returned data from  database
 
 export interface Viewer {
   _id?: string;
@@ -72,6 +72,7 @@ export interface User {
 
   bookings: ObjectId[];
   listings: ObjectId[];
+  authorized?: boolean;
 }
 
 export interface Database {

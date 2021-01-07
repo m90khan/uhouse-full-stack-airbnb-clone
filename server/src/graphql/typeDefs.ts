@@ -14,6 +14,56 @@ avatar: String - the viewer's avatar image URL.
 hasWallet: Boolean - a boolean value to indicate if the viewer has connected to the payment processor in our app (Stripe).
 didRequest: Boolean! - a boolean value to indicate if a request has been made from the client to obtain viewer information. */
 export const typeDefs = gql`
+  enum ListingType {
+    APARTMENT
+    HOUSE
+  }
+  type Listing {
+    id: ID!
+    title: String!
+    description: String!
+    image: String!
+    host: User!
+    type: ListingType!
+    address: String!
+    country: String!
+    admin: String!
+    city: String!
+    # bookings refers to listings from different users
+    bookings(limit: Int!, page: Int!): Bookings
+    bookingsIndex: String!
+    price: Int!
+    numOfGuests: Int!
+  }
+  type Listings {
+    total: Int!
+    result: [Listing!]!
+  }
+  type Booking {
+    id: ID!
+    listing: Listing!
+    tenant: User!
+    checkIn: String!
+    checkOut: String!
+  }
+
+  type Bookings {
+    total: Int!
+    result: [Booking!]!
+  }
+  # user query type : income and booking optional
+  # resolve only the user access its bookings
+  type User {
+    id: ID!
+    name: String!
+    avatar: String!
+    contact: String!
+    hasWallet: Boolean!
+    income: Int
+    bookings(limit: Int!, page: Int!): Bookings
+    listings(limit: Int!, page: Int!): Listings!
+  }
+
   # Current user expected object
   type Viewer {
     id: ID
@@ -23,14 +73,14 @@ export const typeDefs = gql`
     didRequest: Boolean!
   }
 
+  type Query {
+    authUrl: String!
+    user(id: ID!): User!
+  }
+
   input LogInInput {
     code: String!
   }
-
-  type Query {
-    authUrl: String!
-  }
-
   type Mutation {
     logIn(input: LogInInput): Viewer!
     logOut: Viewer!
