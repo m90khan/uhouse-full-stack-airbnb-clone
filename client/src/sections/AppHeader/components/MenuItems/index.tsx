@@ -2,8 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/react-hooks';
 import { Avatar, Button, Menu } from 'antd';
-import Icon from '@ant-design/icons';
-
+import {
+  HomeOutlined,
+  UserOutlined,
+  LoginOutlined,
+  LogoutOutlined,
+} from '@ant-design/icons';
 import { LOG_OUT } from '../../../../lib/graphql/mutations';
 import { LogOut as LogOutData } from '../../../../lib/graphql/mutations/Logout/__generated__/LogOut';
 import { displaySuccessNotification, displayErrorMessage } from '../../../../lib/utils';
@@ -42,13 +46,13 @@ export const MenuItems = ({ viewer, setViewer }: Props) => {
       <SubMenu title={<Avatar src={viewer.avatar} />}>
         <Item key='/user'>
           <Link to={`/user/${viewer.id}`}>
-            <Icon type='user' />
+            <UserOutlined />
             Profile
           </Link>
         </Item>
         <Item key='/logout'>
           <div onClick={handleLogOut}>
-            <Icon type='logout' />
+            <LogoutOutlined />
             Log out
           </div>
         </Item>
@@ -65,7 +69,7 @@ export const MenuItems = ({ viewer, setViewer }: Props) => {
     <Menu mode='horizontal' selectable={false} className='menu'>
       <Item key='/host'>
         <Link to='/host'>
-          <Icon type='home' />
+          <HomeOutlined />
           Host
         </Link>
       </Item>

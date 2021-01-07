@@ -77,7 +77,12 @@ const AppRouter = () => {
           <Route path='/host' component={Host} exact />
           <Route path='/listing/:id' component={Listing} exact />
           <Route path='/listings/:location?' component={Listings} exact />
-          <Route path='/user/:id' component={User} exact />
+
+          <Route
+            exact
+            path='/user/:id'
+            render={(props) => <User {...props} viewer={viewer} />}
+          />
           <Route
             exact
             path='/login'
