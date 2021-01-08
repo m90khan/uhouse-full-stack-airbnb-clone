@@ -46,6 +46,7 @@ export interface Listing {
   bookingsIndex: BookingsIndex; // object of object
   price: number;
   numOfGuests: number;
+  authorized?: boolean;
 }
 
 /*      bookingsIndex: BookingsIndexYear;

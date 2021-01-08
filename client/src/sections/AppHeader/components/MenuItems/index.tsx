@@ -2,12 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/react-hooks';
 import { Avatar, Button, Menu } from 'antd';
-import {
-  HomeOutlined,
-  UserOutlined,
-  LoginOutlined,
-  LogoutOutlined,
-} from '@ant-design/icons';
+import { HomeOutlined, UserOutlined, LogoutOutlined } from '@ant-design/icons';
 import { LOG_OUT } from '../../../../lib/graphql/mutations';
 import { LogOut as LogOutData } from '../../../../lib/graphql/mutations/Logout/__generated__/LogOut';
 import { displaySuccessNotification, displayErrorMessage } from '../../../../lib/utils';
