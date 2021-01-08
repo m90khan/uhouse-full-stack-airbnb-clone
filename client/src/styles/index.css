@@ -12,11 +12,17 @@
     padding: 0;
   }
 }
+
 .app-header {
   display: flex;
   background: #fff;
   box-shadow: 0 2px 8px #f0f1f2;
-  padding: 0;
+  padding: 0 7rem;
+}
+@media (max-width: 64em) {
+  .app-header {
+    padding: 0;
+  }
 }
 .app-header__logo-search-section {
   display: flex;
@@ -116,6 +122,7 @@
 .listing-card__dimensions i,
 .listing-card__dimensions span {
   padding-right: 10px;
+  margin-top: 0.7rem;
   font-size: 13px;
 }
 .listing-card__dimensions span {
@@ -653,4 +660,45 @@ html {
   .app__affix-footer {
     display: none;
   }
+}
+
+.footer {
+  background: #3367d6;
+  color: #fff;
+}
+.footer-wrap {
+  padding: 2rem 8rem;
+}
+.footer-wrap .footer-item {
+  display: inline-block;
+  text-align: left;
+}
+
+.footer-wrap .footer-item h2 {
+  margin: 2rem 0 1rem;
+  color: #fff;
+  font-size: 16px;
+}
+
+.footer-wrap .footer-item div {
+  margin: 0.6rem 0px 0.5rem;
+  font-size: 14px;
+}
+
+.footer-wrap .footer-item div a {
+  color: rgba(256, 256, 256, 0.9);
+}
+
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 2rem 8rem;
+  line-height: 22px;
+
+  color: rgba(255, 255, 255, 0.6);
+}
+.footer-bottom a {
+  color: rgba(255, 255, 255, 0.6);
+}
+.footer-bottom {
+  color: rgba(255, 255, 255, 0.6);
 }

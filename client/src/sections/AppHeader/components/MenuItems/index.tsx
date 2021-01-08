@@ -5,7 +5,11 @@ import { Avatar, Button, Menu } from 'antd';
 import { HomeOutlined, UserOutlined, LogoutOutlined } from '@ant-design/icons';
 import { LOG_OUT } from '../../../../lib/graphql/mutations';
 import { LogOut as LogOutData } from '../../../../lib/graphql/mutations/Logout/__generated__/LogOut';
-import { displaySuccessNotification, displayErrorMessage } from '../../../../lib/utils';
+import {
+  displaySuccessNotification,
+  displayErrorMessage,
+  iconColor,
+} from '../../../../lib/utils';
 import { Viewer } from '../../../../lib/types';
 
 interface Props {
@@ -38,7 +42,11 @@ export const MenuItems = ({ viewer, setViewer }: Props) => {
 
   const subMenuLogin =
     viewer.id && viewer.avatar ? (
-      <SubMenu title={<Avatar src={viewer.avatar} />}>
+      <SubMenu
+        title={
+          <Avatar src={viewer.avatar} style={{ border: `4px solid ${iconColor}` }} />
+        }
+      >
         <Item key='/user'>
           <Link to={`/user/${viewer.id}`}>
             <UserOutlined />

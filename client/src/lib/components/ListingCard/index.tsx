@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Card, Typography } from 'antd';
+import { Card, Typography, Rate } from 'antd';
 import { iconColor, formatListingPrice } from '../../utils';
 import { UserOutlined } from '@ant-design/icons';
 
@@ -44,8 +44,8 @@ export const ListingCard = ({ listing }: Props) => {
               {address}
             </Text>
           </div>
+          <Rate style={{ color: iconColor }} allowHalf disabled defaultValue={4.5} />
           <div className='listing-card__dimensions listing-card__dimensions--guests'>
-            {/* <Icon type='user'  /> */}
             <UserOutlined style={{ color: iconColor }} />
             <Text> {numOfGuests} guests</Text>
           </div>

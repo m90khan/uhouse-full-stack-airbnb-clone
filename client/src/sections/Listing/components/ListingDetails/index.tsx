@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Avatar, Divider, Tag, Typography } from 'antd';
+import { Avatar, Divider, Tag, Typography, Rate } from 'antd';
 import { Listing as ListingData } from '../../../../lib/graphql/queries/Listing/__generated__/Listing';
 import { iconColor } from '../../../../lib/utils';
 import { EnvironmentOutlined } from '@ant-design/icons';
@@ -32,6 +32,7 @@ export const ListingDetails = ({ listing }: Props) => {
         <Title level={3} className='listing-details__title'>
           {title}
         </Title>
+        <Rate style={{ color: iconColor }} allowHalf disabled defaultValue={4.5} />
       </div>
 
       <Divider />
@@ -49,6 +50,7 @@ export const ListingDetails = ({ listing }: Props) => {
 
       <div className='listing-details__section'>
         <Title level={4}>About this space</Title>
+
         <div className='listing-details__about-items'>
           <Tag color='magenta'>{type}</Tag>
           <Tag color='magenta'>{numOfGuests} Guests</Tag>

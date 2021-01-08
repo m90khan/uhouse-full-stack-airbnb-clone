@@ -12,6 +12,7 @@ import {
 } from './lib/graphql/mutations/Login/__generated__/LogIn';
 import { AppHeader } from './sections/AppHeader';
 import { AppHeaderSkeleton, ErrorBanner } from './lib/components';
+import Footer from './sections/Footer';
 
 // viewer for access
 
@@ -96,7 +97,12 @@ const AppRouter = () => {
 };
 
 function App() {
-  return <AppRouter />;
+  return (
+    <div>
+      <AppRouter />;
+      <Footer />
+    </div>
+  );
 }
 
 export default App;

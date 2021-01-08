@@ -29,7 +29,7 @@ export const UserProfile = ({ user, viewerIsUser }: Props) => {
             target='_blank'
             rel='noopener noreferrer'
           >
-            Stripe
+            <span> Stripe </span>
           </a>
           to help transfer your earnings in a secure and truster manner.
         </Paragraph>
