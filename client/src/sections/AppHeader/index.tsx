@@ -30,7 +30,7 @@ export const AppHeader = withRouter(
         setSearch('');
         return;
       }
-
+      // http://localhost:3000/listings/toronto
       if (pathname.includes('/listings') && pathnameSubStrings.length === 3) {
         setSearch(pathnameSubStrings[2]);
         return;
