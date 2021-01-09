@@ -20,8 +20,8 @@ export default function Footer() {
               xs={24}
               className='footer-item-col'
             >
-              <div className='footer-item'>
-                <h2>
+              <div className='footer-item' key={index.toString()}>
+                <h2 key={index.toString()}>
                   {/* {foot.icon && (
                     <img
                       style={{

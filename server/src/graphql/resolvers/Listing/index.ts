@@ -3,6 +3,8 @@ import { ObjectId } from 'mongodb';
 import { Request } from 'express';
 import { Database, Listing, User } from '../../../lib/types';
 import { authorize } from '../../../lib/utils';
+import { Google } from '../../../lib/api';
+
 import {
   ListingArgs,
   ListingBookingsArgs,
@@ -10,6 +12,7 @@ import {
   ListingsArgs,
   ListingsData,
   ListingsFilter,
+  ListingsQuery,
 } from './types';
 
 export const listingResolvers: IResolvers = {
@@ -35,17 +38,47 @@ export const listingResolvers: IResolvers = {
     },
     listings: async (
       _root: undefined,
-      { filter, limit, page }: ListingsArgs,
+      { location, filter, limit, page }: ListingsArgs,
       { db }: { db: Database }
     ): Promise<ListingsData> => {
       try {
+        const query: ListingsQuery = {};
         const data: ListingsData = {
+          region: null,
           total: 0,
           result: [],
         };
 
-        let cursor = await db.listings.find({});
+        // if (location) {
+        //   const { country, admin, city } = await Google.geocode(location);
+        //   if (city) query.city = city;
+        //   if (admin) query.admin = admin;
+        //   if (country) {
+        //     query.country = country;
+        //   } else {
+        //     throw new Error('no country found');
+        //   }
 
+        //   // const cityText = city ? `${city}, ` : '';
+        //   // const adminText = admin ? `${admin}, ` : '';
+        //   // data.region = `${cityText}${adminText}${country}`;
+        // }
+        if (location) {
+          const wordCapitalize = location.split(' ');
+
+          const strData = wordCapitalize
+            .map((word) => {
+              return word[0].toUpperCase() + word.substring(1);
+            })
+            .join(' ');
+          query.city = strData;
+          data.region = `${strData}`;
+        }
+
+        let cursor = await db.listings.find(query);
+        if (!cursor) {
+          throw new Error(`Failed to query listings`);
+        }
         if (filter && filter === ListingsFilter.PRICE_LOW_TO_HIGH) {
           cursor = cursor.sort({ price: 1 });
         }

@@ -70,7 +70,7 @@ const AppRouter = () => {
       <Layout id='app'>
         {logInErrorBannerElement}
 
-        <Affix offsetBottom={0} className='app__affix-header'>
+        <Affix offsetTop={0} className='app__affix-header'>
           <AppHeader viewer={viewer} setViewer={setViewer} />
         </Affix>
         <Switch>
@@ -91,6 +91,7 @@ const AppRouter = () => {
           />
           <Route component={NotFound} />
         </Switch>
+        <Footer />
       </Layout>
     </Router>
   );
@@ -100,7 +101,6 @@ function App() {
   return (
     <div>
       <AppRouter />;
-      <Footer />
     </div>
   );
 }

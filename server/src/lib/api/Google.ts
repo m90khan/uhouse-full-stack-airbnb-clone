@@ -1,8 +1,8 @@
 import { google } from 'googleapis';
 import { createClient, AddressComponent } from '@google/maps';
 
+// maps client
 const maps = createClient({ key: `${process.env.G_GEOCODE_KEY}`, Promise });
-
 const parseAddress = (addressComponents: AddressComponent<any>[]) => {
   let country = null;
   let admin = null;
@@ -21,7 +21,8 @@ const parseAddress = (addressComponents: AddressComponent<any>[]) => {
       city = component.long_name;
     }
   }
-
+  console.log(`parseAddress: ${country} ${admin} ${city}`);
+  // return country, city and admin town
   return { country, admin, city };
 };
 
@@ -68,12 +69,13 @@ export const Google = {
     return { user: data };
   },
   geocode: async (address: string) => {
+    console.log('geocode');
     const res = await maps.geocode({ address }).asPromise();
-
+    console.log(res);
     if (res.status < 200 || res.status > 299) {
       throw new Error('failed to geocode address');
     }
-
+    console.log(res.json.results[0].address_components);
     return parseAddress(res.json.results[0].address_components);
   },
 };

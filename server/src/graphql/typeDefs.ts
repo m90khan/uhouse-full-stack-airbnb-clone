@@ -29,13 +29,13 @@ export const typeDefs = gql`
     country: String!
     admin: String!
     city: String!
-    # bookings refers to listings from different users
     bookings(limit: Int!, page: Int!): Bookings
     bookingsIndex: String!
     price: Int!
     numOfGuests: Int!
   }
   type Listings {
+    region: String
     total: Int!
     result: [Listing!]!
   }

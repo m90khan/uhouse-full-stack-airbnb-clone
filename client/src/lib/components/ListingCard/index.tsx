@@ -15,7 +15,7 @@ interface Props {
   };
 }
 
-const { Text, Title } = Typography;
+const { Text, Title, Paragraph } = Typography;
 
 export const ListingCard = ({ listing }: Props) => {
   const { id, title, image, address, price, numOfGuests } = listing;
