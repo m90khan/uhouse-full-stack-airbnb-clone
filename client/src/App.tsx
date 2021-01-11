@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { Home, Host, Listing, NotFound, User, Listings, Login } from './sections';
+import { Home, Listing, NotFound, User, Listings, Login, Stripe, Host } from './sections';
 import { Affix, Layout, Spin } from 'antd';
 import { Viewer } from './lib/types';
 import { useMutation } from '@apollo/react-hooks';
 import { LOG_IN } from './lib/graphql/mutations';
+import { StripeProvider, Elements } from 'react-stripe-elements';
 
 import {
   LogIn as LogInData,
@@ -66,43 +67,61 @@ const AppRouter = () => {
   ) : null;
   return (
     // Router =  parent router
-    <Router>
-      <Layout id='app'>
-        {logInErrorBannerElement}
+    <StripeProvider apiKey={process.env.REACT_APP_S_PUBLISHABLE_KEY as string}>
+      <Router>
+        <Layout id='app'>
+          {logInErrorBannerElement}
 
-        <Affix offsetTop={0} className='app__affix-header'>
-          <AppHeader viewer={viewer} setViewer={setViewer} />
-        </Affix>
-        <Switch>
-          <Route path='/' component={Home} exact />
-          <Route path='/host' component={Host} exact />
-          <Route path='/listing/:id' component={Listing} exact />
-          <Route path='/listings/:location?' component={Listings} exact />
-
-          <Route
-            exact
-            path='/user/:id'
-            render={(props) => <User {...props} viewer={viewer} />}
-          />
-          <Route
-            exact
-            path='/login'
-            render={(props) => <Login {...props} setViewer={setViewer} />}
-          />
-          <Route component={NotFound} />
-        </Switch>
-        <Footer />
-      </Layout>
-    </Router>
+          <Affix offsetTop={0} className='app__affix-header'>
+            <AppHeader viewer={viewer} setViewer={setViewer} />
+          </Affix>
+          <Switch>
+            <Route path='/' component={Home} exact />
+            <Route
+              exact
+              path='/host'
+              render={(props) => <Host {...props} viewer={viewer} />}
+            />
+            <Route
+              exact
+              path='/listing/:id'
+              render={(props) => (
+                <Elements>
+                  <Listing {...props} viewer={viewer} />
+                </Elements>
+              )}
+            />
+            <Route path='/listings/:location?' component={Listings} exact />
+            <Route
+              exact
+              path='/login'
+              render={(props) => <Login {...props} setViewer={setViewer} />}
+            />
+            <Route
+              exact
+              path='/user/:id'
+              render={(props) => (
+                <User {...props} viewer={viewer} setViewer={setViewer} />
+              )}
+            />
+            <Route
+              exact
+              path='/stripe'
+              render={(props) => (
+                <Stripe {...props} viewer={viewer} setViewer={setViewer} />
+              )}
+            />
+            <Route component={NotFound} />
+          </Switch>
+          {/* <Footer /> */}
+        </Layout>
+      </Router>
+    </StripeProvider>
   );
 };
 
 function App() {
-  return (
-    <div>
-      <AppRouter />;
-    </div>
-  );
+  return <AppRouter />;
 }
 
 export default App;

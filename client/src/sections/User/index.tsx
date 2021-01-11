@@ -14,6 +14,7 @@ import { UserBookings, UserListings, UserProfile } from './components';
 
 interface Props {
   viewer: Viewer;
+  setViewer: (viewer: Viewer) => void;
 }
 
 interface MatchParams {
@@ -22,10 +23,14 @@ interface MatchParams {
 
 const { Content } = Layout;
 const PAGE_LIMIT = 4;
-export const User = ({ viewer, match }: Props & RouteComponentProps<MatchParams>) => {
+export const User = ({
+  viewer,
+  setViewer,
+  match,
+}: Props & RouteComponentProps<MatchParams>) => {
   const [listingsPage, setListingsPage] = useState(1);
   const [bookingsPage, setBookingsPage] = useState(1);
-  const { data, loading, error } = useQuery<UserData, UserVariables>(USER, {
+  const { data, loading, error, refetch } = useQuery<UserData, UserVariables>(USER, {
     variables: {
       id: match.params.id,
       bookingsPage,
@@ -33,7 +38,9 @@ export const User = ({ viewer, match }: Props & RouteComponentProps<MatchParams>
       limit: PAGE_LIMIT,
     },
   });
-
+  const handleUserRefetch = async () => {
+    await refetch();
+  };
   if (loading) {
     return (
       <Content className='user'>
@@ -57,7 +64,13 @@ export const User = ({ viewer, match }: Props & RouteComponentProps<MatchParams>
   const userListings = user ? user.listings : null;
   const userBookings = user ? user.bookings : null;
   const userProfileElement = user ? (
-    <UserProfile user={user} viewerIsUser={viewerIsUser} />
+    <UserProfile
+      user={user}
+      viewer={viewer}
+      viewerIsUser={viewerIsUser}
+      setViewer={setViewer}
+      handleUserRefetch={handleUserRefetch}
+    />
   ) : null;
 
   const userListingsElement = userListings ? (

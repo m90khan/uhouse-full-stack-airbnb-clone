@@ -1,38 +1,117 @@
 import React, { Fragment } from 'react';
-import { Avatar, Button, Card, Divider, Typography } from 'antd';
-import { User as UserData } from '../../../../lib/graphql/queries/User/__generated__/User';
+import { Avatar, Button, Card, Divider, Tag, Typography } from 'antd';
+import { useMutation } from '@apollo/react-hooks';
 
+import {
+  formatListingPrice,
+  displaySuccessNotification,
+  displayErrorMessage,
+} from '../../../../lib/utils';
+import { DISCONNECT_STRIPE } from '../../../../lib/graphql/mutations';
+import { DisconnectStripe as DisconnectStripeData } from '../../../../lib/graphql/mutations/DisconnectStripe/__generated__/DisconnectStripe';
+import { User as UserData } from '../../../../lib/graphql/queries/User/__generated__/User';
+import { Viewer } from '../../../../lib/types';
+// lookup types: accessing the type of the User
 interface Props {
-  user: UserData['user']; // lookup types: accessing the type of the User
+  user: UserData['user'];
+  viewer: Viewer;
   viewerIsUser: boolean;
+  setViewer: (viewer: Viewer) => void;
+  handleUserRefetch: () => void;
 }
+//Stripe auth url
+const stripeAuthUrl = `https://connect.stripe.com/oauth/authorize?response_type=code&client_id=${process.env.REACT_APP_S_CLIENT_ID}&scope=read_write`;
 
 const { Paragraph, Text, Title } = Typography;
 
-export const UserProfile = ({ user, viewerIsUser }: Props) => {
+export const UserProfile = ({
+  user,
+  viewer,
+  viewerIsUser,
+  setViewer,
+  handleUserRefetch,
+}: Props) => {
+  // Fragment: to group child elements without adding extra nodes to DOM
+  const [disconnectStripe, { loading }] = useMutation<DisconnectStripeData>(
+    DISCONNECT_STRIPE,
+    {
+      onCompleted: (data) => {
+        if (data && data.disconnectStripe) {
+          setViewer({ ...viewer, hasWallet: data.disconnectStripe.hasWallet });
+          displaySuccessNotification(
+            "You've successfully disconnected from Stripe!",
+            "You'll have to reconnect with Stripe to continue to create listings."
+          );
+          handleUserRefetch();
+        }
+      },
+      onError: () => {
+        displayErrorMessage(
+          "Sorry! We weren't able to disconnect you from Stripe. Please try again later!"
+        );
+      },
+    }
+  );
+
+  const redirectToStripe = () => {
+    window.location.href = stripeAuthUrl;
+  };
+
+  const additionalDetails = user.hasWallet ? (
+    <Fragment>
+      <Paragraph>
+        <Tag color='green'>Stripe Registered</Tag>
+      </Paragraph>
+      <Paragraph>
+        Income Earned:
+        <Text strong>{user.income ? formatListingPrice(user.income) : `$0`}</Text>
+      </Paragraph>
+      <Button
+        type='primary'
+        className='user-profile__details-cta'
+        loading={loading}
+        onClick={() => disconnectStripe()}
+      >
+        Disconnect Stripe
+      </Button>
+      <Paragraph type='secondary'>
+        By disconnecting, you won't be able to receive
+        <Text strong>any further payments</Text>. This will prevent users from booking
+        listings that you might have already created.
+      </Paragraph>
+    </Fragment>
+  ) : (
+    <Fragment>
+      <Paragraph>
+        Interested in becoming a AirHouse host? Register with your Stripe account!
+      </Paragraph>
+      <Button
+        type='primary'
+        className='user-profile__details-cta'
+        onClick={redirectToStripe}
+      >
+        Connect with Stripe
+      </Button>
+      <Paragraph type='secondary'>
+        AirHouse uses{' '}
+        <a
+          href='https://stripe.com/en-US/connect'
+          target='_blank'
+          rel='noopener noreferrer'
+        >
+          Stripe
+        </a>{' '}
+        to help transfer your earnings in a secure and truster manner.
+      </Paragraph>
+    </Fragment>
+  );
+
   const additionalDetailsSection = viewerIsUser ? (
-    // Fragment: to group child elements without adding extra nodes to DOM
     <Fragment>
       <Divider />
       <div className='user-profile__details'>
         <Title level={4}>Additional Details</Title>
-        <Paragraph>
-          Interested in becoming a AirHouse host? Register with your Stripe account!
-        </Paragraph>
-        <Button type='primary' className='user-profile__details-cta'>
-          Connect with Stripe
-        </Button>
-        <Paragraph type='secondary'>
-          AirHouse uses
-          <a
-            href='https://stripe.com/en-US/connect'
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            <span> Stripe </span>
-          </a>
-          to help transfer your earnings in a secure and truster manner.
-        </Paragraph>
+        {additionalDetails}
       </div>
     </Fragment>
   ) : null;
