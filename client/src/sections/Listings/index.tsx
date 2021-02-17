@@ -79,7 +79,7 @@ skipping the refetching query on page change  using apollo skip
             gutter: 8,
             xs: 1,
             sm: 2,
-            lg: 2,
+            lg: 4,
           }}
           dataSource={listings.result}
           renderItem={(listing) => (

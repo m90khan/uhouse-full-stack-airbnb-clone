@@ -1,10 +1,10 @@
-import React from "react";
-import { Card, List, Skeleton } from "antd";
+import React from 'react';
+import { Card, List, Skeleton } from 'antd';
 
-import listingLoadingCardCover from "../../assets/listing-loading-card-cover.jpg";
+import listingLoadingCardCover from '../../assets/listing-loading-card-cover.jpg';
 
 export const ListingsSkeleton = () => {
-  const emptyData = [{}, {}, {}, {}, {}, {}, {}, {}];
+  const emptyData = [{}, {}, {}, {}];
 
   return (
     <div>
@@ -14,7 +14,7 @@ export const ListingsSkeleton = () => {
           gutter: 8,
           xs: 1,
           sm: 2,
-          lg: 4
+          lg: 4,
         }}
         dataSource={emptyData}
         renderItem={() => (
@@ -23,11 +23,11 @@ export const ListingsSkeleton = () => {
               cover={
                 <div
                   style={{ backgroundImage: `url(${listingLoadingCardCover})` }}
-                  className="listings-skeleton__card-cover-img"
+                  className='listings-skeleton__card-cover-img'
                 ></div>
               }
               loading
-              className="listings-skeleton__card"
+              className='listings-skeleton__card'
             />
           </List.Item>
         )}
