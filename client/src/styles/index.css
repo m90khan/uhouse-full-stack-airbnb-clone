@@ -98,7 +98,7 @@
   width: 100%;
   height: 195px;
   background-size: cover;
-  background-position: 50%;
+  background-position: 50% 50%;
 }
 .listing-card__rating-tag {
   position: absolute;

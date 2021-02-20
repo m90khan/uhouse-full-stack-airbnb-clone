@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 import { Col, Layout, Row } from 'antd';
 import { Moment } from 'moment';
@@ -26,7 +26,8 @@ interface Props {
 const { Content } = Layout;
 const PAGE_LIMIT = 3;
 
-export const Listing = ({ viewer, match }: Props & RouteComponentProps<MatchParams>) => {
+export const Listing = ({ viewer }: Props) => {
+  const match = useParams<MatchParams>();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [bookingsPage, setBookingsPage] = useState(1);
   const [checkInDate, setCheckInDate] = useState<Moment | null>(null);
@@ -37,7 +38,7 @@ export const Listing = ({ viewer, match }: Props & RouteComponentProps<MatchPara
     LISTING,
     {
       variables: {
-        id: match.params.id,
+        id: match.id,
         bookingsPage,
         limit: PAGE_LIMIT,
       },

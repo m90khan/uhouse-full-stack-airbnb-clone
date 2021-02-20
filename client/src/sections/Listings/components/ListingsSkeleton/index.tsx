@@ -4,7 +4,7 @@ import { Card, List, Skeleton } from 'antd';
 import listingLoadingCardCover from '../../assets/listing-loading-card-cover.jpg';
 
 export const ListingsSkeleton = () => {
-  const emptyData = [{}, {}, {}, {}];
+  const emptyData = [{}, {}, {}, {}, {}, {}, {}, {}];
 
   return (
     <div>
@@ -22,7 +22,10 @@ export const ListingsSkeleton = () => {
             <Card
               cover={
                 <div
-                  style={{ backgroundImage: `url(${listingLoadingCardCover})` }}
+                  style={{
+                    backgroundImage: `url(${listingLoadingCardCover})`,
+                    width: '20rem',
+                  }}
                   className='listings-skeleton__card-cover-img'
                 ></div>
               }

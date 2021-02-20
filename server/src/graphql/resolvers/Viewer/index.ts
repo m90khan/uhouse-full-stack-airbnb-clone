@@ -10,9 +10,6 @@ CSRF
 1- use secure to only https when not in developement
 2- use sameSite : cookie can only be sent from same Site the user is viewing 
 3- client pass in csrf token with every requet and server will use the token to verify the identity
-
-
-
 */
 const cookieOptions = {
   httpOnly: true,
@@ -93,7 +90,7 @@ const logInViaGoogle = async (
   });
   return viewer;
 };
-
+/* LogIn via Cookie */
 const logInViaCookie = async (
   token: string,
   db: Database,
@@ -151,7 +148,7 @@ export const viewerResolvers: IResolvers = {
           didRequest: true,
         };
       } catch (error) {
-        throw new Error(`Falied to log in ${error}`);
+        throw new Error(`Failed to log in ${error}`);
       }
     },
     logOut: (_root: undefined, _args: {}, { res }: { res: Response }): Viewer => {

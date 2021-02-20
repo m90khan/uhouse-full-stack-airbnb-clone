@@ -59,11 +59,11 @@ export const Host = ({ viewer, form }: Props & any) => {
   const handleImageUpload = (info: UploadChangeParam) => {
     // info object gives the status for the upload
     const { file } = info;
-
-    if (file.status === 'uploading') {
-      setImageLoading(true);
-      return;
-    }
+    console.log(file);
+    // if (file.status === 'uploading') {
+    //   setImageLoading(true);
+    //   return;
+    // }
     // if done is done upload and has property originFileBody which is the orifinal file object
     if (file.status === 'done' && file.originFileObj) {
       getBase64Value(file.originFileObj, (imageBase64Value) => {
@@ -214,13 +214,13 @@ export const Host = ({ viewer, form }: Props & any) => {
 
         <Item
           label='Address'
-          // name='Address'
-          // rules={[
-          //   {
-          //     required: true,
-          //     message: 'Please enter a address for your listing!',
-          //   },
-          // ]}
+          name='Address'
+          rules={[
+            {
+              required: true,
+              message: 'Please enter a address for your listing!',
+            },
+          ]}
         >
           <Input placeholder='251 North Bristol Avenue' />
         </Item>
@@ -274,7 +274,7 @@ export const Host = ({ viewer, form }: Props & any) => {
               name='image'
               listType='picture-card'
               showUploadList={false}
-              // action='https://www.mocky.io/v2/5cc8019d300000980a055e76'
+              action='https://www.mocky.io/v2/5cc8019d300000980a055e76'
               beforeUpload={beforeImageUpload}
               onChange={handleImageUpload}
             >
@@ -324,6 +324,8 @@ const beforeImageUpload = (file: File) => {
   const fileIsValidImage = file.type === 'image/jpeg' || file.type === 'image/png';
   const fileIsValidSize = file.size / 1024 / 1024 < 1;
 
+  console.log(file);
+  console.log(fileIsValidImage, fileIsValidSize);
   if (!fileIsValidImage) {
     displayErrorMessage('You can only upload valid JPG or PNG files!');
     return false;
@@ -345,6 +347,7 @@ const getBase64Value = (
   FileReadeer allows to read blocks of a file
   */
   const reader = new FileReader();
+  console.log(reader);
   reader.readAsDataURL(img); // read the contents of the img file
   reader.onload = () => {
     callback(reader.result as string);

@@ -26,7 +26,8 @@ const parseAddress = (addressComponents: AddressComponent<any>[]) => {
   return { country, admin, city };
 };
 
-/*
+/*   
+LOGIN
 1- configure auth object
 2- generate auth url
 3- get user tokens and information (not storing tokens in db as not needed for other apis)

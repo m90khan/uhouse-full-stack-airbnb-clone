@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Redirect, RouteComponentProps } from 'react-router-dom';
+import { Redirect, RouteComponentProps, useHistory } from 'react-router-dom';
 import { useMutation } from '@apollo/react-hooks';
 import { Layout, Spin } from 'antd';
 import { CONNECT_STRIPE } from '../../lib/graphql/mutations';
@@ -17,7 +17,8 @@ interface Props {
 
 const { Content } = Layout;
 
-export const Stripe = ({ viewer, setViewer, history }: Props & RouteComponentProps) => {
+export const Stripe = ({ viewer, setViewer }: Props) => {
+  const history = useHistory<RouteComponentProps>();
   const [connectStripe, { data, loading, error }] = useMutation<
     ConnectStripeData,
     ConnectStripeVariables

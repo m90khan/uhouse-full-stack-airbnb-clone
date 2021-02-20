@@ -24,29 +24,39 @@ const { Text, Title } = Typography;
 interface Props {
   setViewer: (viewer: Viewer) => void;
 }
+/* 
+1- access client to query for auth_URL using useAPolloClient
+2- if success then change the url to the authURL.
+3- on signIn success, redirect to assigned URL with the code
+4- access the code from the URL and proceed with logIn mutation to access googleapis
+5- if success, then set if does not exists or update if does the viewer object to current viewer
+6- Redirect to the user/viewerId
+ */
 export const Login = ({ setViewer }: Props) => {
+  /* Step - 1 */
   const client = useApolloClient();
   const [
     logIn,
     { data: logInData, loading: logInLoading, error: logInError },
   ] = useMutation<LogInData, LogInVariables>(LOG_IN, {
+    /* Step - 5 */
     onCompleted: (data) => {
-      console.log(data);
       if (data && data.logIn && data.logIn.token) {
         setViewer(data.logIn);
         sessionStorage.setItem('token', data.logIn.token);
-
         displaySuccessNotification("You've successfully logged in!");
       }
     },
   });
-  // useRef persist for th lifetime of the component
+  // useRef returns mutatable object which will persist for lifetime of the component
   const logInRef = useRef(logIn);
   /*
-render logIn on compoenent render and if code avaialable 
-no dependency as component not to run after mounter
+logIn is defined inside the component, no LogIn dependency as whenever component 
+renders a new logIn value will be re-renders which can cause problems so the reason for useRef 
 */
+
   useEffect(() => {
+    /* Step - 4 */
     const code = new URL(window.location.href).searchParams.get('code');
     if (code) {
       // useRef.current = > is the LogIn object from logInRef
@@ -60,9 +70,11 @@ no dependency as component not to run after mounter
 
   const handleAuthorize = async () => {
     try {
+      /* Step - 1 & 2 */
       const { data } = await client.query<AuthUrlData>({
         query: AUTH_URL,
       });
+      /* Step - 3 */
       window.location.href = data.authUrl;
     } catch {
       displayErrorMessage(
@@ -78,7 +90,7 @@ no dependency as component not to run after mounter
       </Content>
     );
   }
-
+  /* Step - 6 */
   if (logInData && logInData.logIn) {
     const { id: viewerId } = logInData.logIn;
     return <Redirect to={`/user/${viewerId}`} />;

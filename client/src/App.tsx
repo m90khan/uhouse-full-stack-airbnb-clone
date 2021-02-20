@@ -1,6 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { Home, Listing, NotFound, User, Listings, Login, Stripe, Host } from './sections';
+import {
+  AppHeader,
+  Home,
+  Listing,
+  NotFound,
+  User,
+  Listings,
+  Login,
+  Stripe,
+  Host,
+} from './sections';
 import { Affix, Layout, Spin } from 'antd';
 import { Viewer } from './lib/types';
 import { useMutation } from '@apollo/react-hooks';
@@ -11,7 +21,6 @@ import {
   LogIn as LogInData,
   LogInVariables,
 } from './lib/graphql/mutations/Login/__generated__/LogIn';
-import { AppHeader } from './sections/AppHeader';
 import { AppHeaderSkeleton, ErrorBanner } from './lib/components';
 import Footer from './sections/Footer';
 
@@ -27,7 +36,6 @@ const initialViewer: Viewer = {
 
 const AppRouter = () => {
   const [viewer, setViewer] = useState<Viewer>(initialViewer);
-
   //set cookie
   const [logIn, { error }] = useMutation<LogInData, LogInVariables>(LOG_IN, {
     onCompleted: (data) => {
@@ -71,32 +79,25 @@ const AppRouter = () => {
       <Router>
         <Layout id='app'>
           {logInErrorBannerElement}
-
           <Affix offsetTop={0} className='app__affix-header'>
             <AppHeader viewer={viewer} setViewer={setViewer} />
           </Affix>
           <Switch>
-            <Route path='/' component={Home} exact />
-            <Route
-              exact
-              path='/host'
-              render={(props) => <Host {...props} viewer={viewer} />}
-            />
-            <Route
-              exact
-              path='/listing/:id'
-              render={(props) => (
-                <Elements>
-                  <Listing {...props} viewer={viewer} />
-                </Elements>
-              )}
-            />
+            <Route path='/' exact>
+              <Home />
+            </Route>
+            <Route exact path='/host'>
+              <Host viewer={viewer} />
+            </Route>
+            <Route exact path='/listing/:id'>
+              <Elements>
+                <Listing viewer={viewer} />
+              </Elements>
+            </Route>
             <Route path='/listings/:location?' component={Listings} exact />
-            <Route
-              exact
-              path='/login'
-              render={(props) => <Login {...props} setViewer={setViewer} />}
-            />
+            <Route exact path='/login'>
+              <Login setViewer={setViewer} />
+            </Route>
             <Route
               exact
               path='/user/:id'
@@ -104,13 +105,9 @@ const AppRouter = () => {
                 <User {...props} viewer={viewer} setViewer={setViewer} />
               )}
             />
-            <Route
-              exact
-              path='/stripe'
-              render={(props) => (
-                <Stripe {...props} viewer={viewer} setViewer={setViewer} />
-              )}
-            />
+            <Route exact path='/stripe'>
+              <Stripe viewer={viewer} setViewer={setViewer} />
+            </Route>
             <Route component={NotFound} />
           </Switch>
           {/* <Footer /> */}

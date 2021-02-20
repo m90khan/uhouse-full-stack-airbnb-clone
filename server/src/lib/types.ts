@@ -52,7 +52,7 @@ export interface Listing {
 /*      bookingsIndex: BookingsIndexYear;
 
 Handling dates for bookings using index . if a house is boked then listing not possible
-  const datePick ={
+  const BookingsIndex ={
     "2019":{     // BookingsIndexYear    string
       "00":{   //BookingsIndexMonth   string
         "01" : true     //      boolean
@@ -62,12 +62,12 @@ Handling dates for bookings using index . if a house is boked then listing not p
 */
 
 export interface User {
-  _id: string;
+  _id: string; // authurlreturns the string tyoe
   token: string;
   name: string;
   avatar: string;
   contact: string;
-  walletId?: string;
+  walletId?: string; // payment details
   income: number;
   // 1-many : user -> bookings
 

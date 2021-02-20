@@ -1,7 +1,7 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 
-import { Link, RouteComponentProps } from 'react-router-dom';
+import { Link, RouteComponentProps, useHistory } from 'react-router-dom';
 import { Col, Row, Layout, Typography } from 'antd';
 import { displayErrorMessage } from '../../lib/utils';
 import { HomeHero, HomeListings, HomeListingsSkeleton } from './components';
@@ -21,7 +21,8 @@ const { Content } = Layout;
 const { Paragraph, Title } = Typography;
 const PAGE_LIMIT = 4;
 const PAGE_NUMBER = 1;
-export const Home = ({ history }: RouteComponentProps) => {
+export const Home = () => {
+  const history = useHistory<RouteComponentProps>();
   const { loading, data } = useQuery<ListingsData, ListingsVariables>(LISTINGS, {
     variables: {
       filter: ListingsFilter.PRICE_HIGH_TO_LOW,
