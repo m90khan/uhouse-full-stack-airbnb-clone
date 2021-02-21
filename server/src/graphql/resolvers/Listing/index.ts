@@ -25,7 +25,7 @@ const verifyHostListingInput = ({
   if (title.length > 100) {
     throw new Error('listing title must be under 100 characters');
   }
-  if (description.length > 5000) {
+  if (description.length > 2000) {
     throw new Error('listing description must be under 5000 characters');
   }
   if (type !== ListingType.Apartment && type !== ListingType.House) {
@@ -68,9 +68,8 @@ export const listingResolvers: IResolvers = {
           total: 0,
           result: [],
         };
-
         // if (location) {
-        //   const { country, admin, city } = await Google.geocode(location);
+        //   const { country, admin, city } = await Google.geoCode(location);
 
         //   if (city) query.city = city;
         //   if (admin) query.admin = admin;
@@ -84,7 +83,9 @@ export const listingResolvers: IResolvers = {
         //   const adminText = admin ? `${admin}, ` : '';
         //   data.region = `${cityText}${adminText}${country}`;
         // }
+
         if (location) {
+          console.log(location);
           const wordCapitalize = location.split(' ');
 
           const strData = wordCapitalize
@@ -92,7 +93,9 @@ export const listingResolvers: IResolvers = {
               return word[0].toUpperCase() + word.substring(1);
             })
             .join(' ');
+
           query.city = strData;
+
           data.region = `${strData}`;
         }
 
@@ -116,6 +119,7 @@ export const listingResolvers: IResolvers = {
 
         return data;
       } catch (error) {
+        console.log(error);
         throw new Error(`Failed to query listings: ${error}`);
       }
     },
@@ -133,24 +137,35 @@ export const listingResolvers: IResolvers = {
       if (!viewer) {
         throw new Error('viewer cannot be found');
       }
-      console.log(req.body);
-      const { country, admin, city } = req.body;
+      const { title, description, image, type, address, numOfGuests, price } = input;
+      const splitAddress = address.split(',');
+      const city = splitAddress[1];
+      const admin = splitAddress[2];
+      const country = splitAddress[3];
+
       // const { country, admin, city } = await Google.geocode(input.address);
       // if (!country || !admin || !city) {
       //   throw new Error('invalid address input');
       // }
 
-      const imageUrl = await Cloudinary.upload(input.image);
+      const imageUrl = await Cloudinary.upload(image);
 
       const insertResult = await db.listings.insertOne({
         _id: new ObjectId(),
-        ...input,
-        image: imageUrl,
+        title,
+        description,
+        price,
+        type,
+        image: imageUrl
+          ? imageUrl
+          : 'https://res.cloudinary.com/tiny-house/image/upload/v1560641352/mock/Toronto/toronto-listing-3_eyftou.jpg',
         bookings: [],
         bookingsIndex: {},
+        address,
         country,
         admin,
         city,
+        numOfGuests,
         host: viewer._id,
       });
 
@@ -170,7 +185,7 @@ export const listingResolvers: IResolvers = {
     },
     host: async (
       listing: Listing,
-      _args: Record<string, never>,
+      _args: {},
       { db }: { db: Database }
     ): Promise<User> => {
       const host = await db.users.findOne({ _id: listing.host });

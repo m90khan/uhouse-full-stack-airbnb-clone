@@ -6,7 +6,7 @@ export const Cloudinary = {
       api_key: process.env.CLOUDINARY_KEY,
       api_secret: process.env.CLOUDINARY_SECRET,
       cloud_name: process.env.CLOUDINARY_NAME,
-      folder: 'AH_Assets/',
+      folder: 'AirHouse/Listings/',
     });
 
     return res.secure_url;

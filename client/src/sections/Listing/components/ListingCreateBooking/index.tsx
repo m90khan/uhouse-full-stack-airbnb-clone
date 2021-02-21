@@ -43,6 +43,7 @@ export const ListingCreateBooking = ({
       return false;
     }
   };
+  /* Disable dates older than current date */
   const disabledDate = (currentDate?: Moment) => {
     if (currentDate) {
       const dateIsBeforeEndOfDay = currentDate.isBefore(moment().endOf('day'));
@@ -52,12 +53,12 @@ export const ListingCreateBooking = ({
       return false;
     }
   };
-
+  /* if checkout date is in past than current date */
   const verifyAndSetCheckOutDate = (selectedCheckOutDate: Moment | null) => {
     if (checkInDate && selectedCheckOutDate) {
       if (moment(selectedCheckOutDate).isBefore(checkInDate, 'days')) {
         return displayErrorMessage(
-          `You can't book date of check out to be prior to check in!`
+          `Wrong: Check out date cannot be picked prior to check in date`
         );
       }
 

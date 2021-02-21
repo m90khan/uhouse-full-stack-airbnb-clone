@@ -30,6 +30,16 @@ export const Home = () => {
       page: PAGE_NUMBER,
     },
   });
+  const { loading: lowLoading, data: LowData } = useQuery<
+    ListingsData,
+    ListingsVariables
+  >(LISTINGS, {
+    variables: {
+      filter: ListingsFilter.PRICE_LOW_TO_HIGH,
+      limit: PAGE_LIMIT,
+      page: PAGE_NUMBER,
+    },
+  });
   const onSearch = (value: string) => {
     const trimmedValue = value.trim();
 
@@ -39,7 +49,7 @@ export const Home = () => {
       displayErrorMessage('Please enter a valid search!');
     }
   };
-  const renderListingsSection = () => {
+  const renderPopularListingsSection = () => {
     if (loading) {
       return <HomeListingsSkeleton />;
     }
@@ -51,6 +61,17 @@ export const Home = () => {
     return null;
   };
 
+  const renderCheapListingsSection = () => {
+    if (lowLoading) {
+      return <HomeListingsSkeleton />;
+    }
+
+    if (LowData) {
+      return <HomeListings title='Economy Listings' listings={LowData.listings.result} />;
+    }
+
+    return null;
+  };
   return (
     <Content className='home' style={{ backgroundImage: `url(${mapBackground})` }}>
       <HomeHero onSearch={onSearch} />
@@ -69,8 +90,8 @@ export const Home = () => {
           Popular listings in the United States
         </Link>
       </div>
-      {renderListingsSection()}
-
+      {renderPopularListingsSection()}
+      {renderCheapListingsSection()}
       <div className='home__listings'>
         <Title level={4} className='home__listings-title'>
           Listings of any kind

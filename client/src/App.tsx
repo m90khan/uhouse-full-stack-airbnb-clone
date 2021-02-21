@@ -59,7 +59,7 @@ const AppRouter = () => {
     logInRef.current();
   }, []);
 
-  // error status and didRequest : if user login or attemping to login
+  // error status and didRequest : if user login or attempting to login then view spinner
   if (!viewer.didRequest && !error) {
     return (
       <Layout className='app-skeleton'>
@@ -98,13 +98,9 @@ const AppRouter = () => {
             <Route exact path='/login'>
               <Login setViewer={setViewer} />
             </Route>
-            <Route
-              exact
-              path='/user/:id'
-              render={(props) => (
-                <User {...props} viewer={viewer} setViewer={setViewer} />
-              )}
-            />
+            <Route exact path='/user/:id'>
+              <User viewer={viewer} setViewer={setViewer} />
+            </Route>
             <Route exact path='/stripe'>
               <Stripe viewer={viewer} setViewer={setViewer} />
             </Route>

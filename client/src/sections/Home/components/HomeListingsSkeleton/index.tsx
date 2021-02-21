@@ -14,6 +14,7 @@ export const HomeListingsSkeleton = () => {
       <List
         grid={{
           gutter: 24,
+          column: 4,
           xs: 1,
           sm: 2,
           lg: 4,

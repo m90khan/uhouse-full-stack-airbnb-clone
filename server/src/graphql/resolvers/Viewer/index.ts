@@ -174,7 +174,7 @@ export const viewerResolvers: IResolvers = {
 
         const wallet = await Stripe.connect(code);
         if (!wallet) {
-          throw new Error('stripe grant error');
+          throw new Error('stripe access error');
         }
 
         const updateRes = await db.users.findOneAndUpdate(

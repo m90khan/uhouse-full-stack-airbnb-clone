@@ -12,6 +12,7 @@ export const ListingsSkeleton = () => {
       <List
         grid={{
           gutter: 8,
+          column: 4,
           xs: 1,
           sm: 2,
           lg: 4,
@@ -24,7 +25,6 @@ export const ListingsSkeleton = () => {
                 <div
                   style={{
                     backgroundImage: `url(${listingLoadingCardCover})`,
-                    width: '20rem',
                   }}
                   className='listings-skeleton__card-cover-img'
                 ></div>

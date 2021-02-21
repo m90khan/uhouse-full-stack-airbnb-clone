@@ -13,7 +13,7 @@ import { User as UserData } from '../../../../lib/graphql/queries/User/__generat
 import { Viewer } from '../../../../lib/types';
 // lookup types: accessing the type of the User
 interface Props {
-  user: UserData['user'];
+  user: UserData['user']; // access the type of the interface using lookup/index types
   viewer: Viewer;
   viewerIsUser: boolean;
   setViewer: (viewer: Viewer) => void;
@@ -93,14 +93,14 @@ export const UserProfile = ({
         Connect with Stripe
       </Button>
       <Paragraph type='secondary'>
-        AirHouse uses{' '}
+        AirHouse uses
         <a
           href='https://stripe.com/en-US/connect'
           target='_blank'
           rel='noopener noreferrer'
         >
           Stripe
-        </a>{' '}
+        </a>
         to help transfer your earnings in a secure and truster manner.
       </Paragraph>
     </Fragment>

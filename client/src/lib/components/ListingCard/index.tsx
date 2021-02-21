@@ -37,12 +37,7 @@ export const ListingCard = ({ listing }: Props) => {
               {formatListingPrice(price)}
               <span>/day</span>
             </Title>
-            <Text
-              strong
-              ellipsis
-              className='listing-card__title'
-              style={{ maxWidth: '80%' }}
-            >
+            <Text strong ellipsis className='listing-card__title'>
               {title}
             </Text>
             <Text ellipsis className='listing-card__address'>

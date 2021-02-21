@@ -16,7 +16,7 @@ const { Header } = Layout;
 const { Search } = Input;
 
 /*
-to be able to use history , withRouter gives a higher order function 
+to be able to use history outside the ROuter , withRouter gives a higher order function 
 */
 export const AppHeader = withRouter(
   ({ viewer, setViewer, location, history }: Props & RouteComponentProps) => {
@@ -56,10 +56,10 @@ export const AppHeader = withRouter(
           </div>
           <div className='app-header__search-input'>
             <Search
-              placeholder="Search 'San Fransisco'"
+              placeholder="Search 'San Francisco'"
               enterButton
               value={search}
-              onChange={(evt) => setSearch(evt.target.value)}
+              onChange={(e) => setSearch(e.target.value)}
               onSearch={onSearch}
             />
           </div>

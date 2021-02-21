@@ -12,7 +12,7 @@ const resolveBookingsIndex = (
   checkOutDate: string
 ): BookingsIndex => {
   let dateCursor = new Date(checkInDate);
-  let checkOut = new Date(checkOutDate);
+  const checkOut = new Date(checkOutDate);
   const newBookingsIndex: BookingsIndex = { ...bookingsIndex };
 
   while (dateCursor <= checkOut) {
@@ -155,7 +155,11 @@ export const bookingResolvers: IResolvers = {
     ): Promise<Listing | null> => {
       return db.listings.findOne({ _id: booking.listing });
     },
-    tenant: (booking: Booking, _args: {}, { db }: { db: Database }) => {
+    tenant: (
+      booking: Booking,
+      _args: {},
+      { db }: { db: Database }
+    ): Promise<Booking | null> => {
       return db.users.findOne({ _id: booking.tenant });
     },
   },

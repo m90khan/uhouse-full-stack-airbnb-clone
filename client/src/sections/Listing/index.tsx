@@ -16,7 +16,6 @@ import {
   ListingDetails,
   WrappedListingCreateBookingModal as ListingCreateBookingModal,
 } from './components';
-
 interface MatchParams {
   id: string;
 }
@@ -73,6 +72,7 @@ export const Listing = ({ viewer }: Props) => {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const listingBookings = listing ? listing.bookings : null;
+  // const listingBookings = listingBookingData;
 
   const listingDetailsElement = listing ? <ListingDetails listing={listing} /> : null;
 

@@ -154,7 +154,7 @@
   width: 100%;
 }
 .home-hero__search {
-  max-width: 600px;
+  max-width: 610px;
 }
 .home-hero__title.ant-typography {
   color: #1d226c;
@@ -196,7 +196,7 @@
   bottom: 40px;
 }
 .home-listings {
-  padding: 40px 0 20px;
+  padding: 20px 0 10px;
 }
 .home-listings__title.ant-typography {
   color: #1d226c;

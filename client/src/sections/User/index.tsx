@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 // to access the match props of a certain route and assign as generic
-import { RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 import { Col, Layout, Row } from 'antd';
 import { USER } from '../../lib/graphql/queries';
@@ -23,16 +23,13 @@ interface MatchParams {
 
 const { Content } = Layout;
 const PAGE_LIMIT = 4;
-export const User = ({
-  viewer,
-  setViewer,
-  match,
-}: Props & RouteComponentProps<MatchParams>) => {
+export const User = ({ viewer, setViewer }: Props) => {
+  const { id: paramsID } = useParams<MatchParams>();
   const [listingsPage, setListingsPage] = useState(1);
   const [bookingsPage, setBookingsPage] = useState(1);
   const { data, loading, error, refetch } = useQuery<UserData, UserVariables>(USER, {
     variables: {
-      id: match.params.id,
+      id: paramsID,
       bookingsPage,
       listingsPage,
       limit: PAGE_LIMIT,
@@ -41,6 +38,12 @@ export const User = ({
   const handleUserRefetch = async () => {
     await refetch();
   };
+  /* handle stripe error: when user redirected to /user/viewerId on stripe error  */
+  const stripeError = new URL(window.location.href).searchParams.get('stripe_error');
+  const stripeErrorBanner = stripeError ? (
+    <ErrorBanner description='We had an issue connecting with Stripe. Please try again soon.' />
+  ) : null;
+
   if (loading) {
     return (
       <Content className='user'>
@@ -59,7 +62,7 @@ export const User = ({
   }
 
   const user = data ? data.user : null;
-  const viewerIsUser = viewer.id === match.params.id;
+  const viewerIsUser = viewer.id === paramsID;
 
   const userListings = user ? user.listings : null;
   const userBookings = user ? user.bookings : null;
@@ -92,6 +95,8 @@ export const User = ({
   ) : null;
   return (
     <Content className='user'>
+      {stripeErrorBanner}
+
       <Row
         gutter={12}
         // style={{ display: 'flex', justifyContent: 'space-between' }}

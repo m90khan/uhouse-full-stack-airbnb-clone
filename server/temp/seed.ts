@@ -670,6 +670,42 @@ const listings: Listing[] = [
     price: 23012,
     numOfGuests: 1,
   },
+  {
+    _id: new ObjectId('5d378db94e84753160e08b54'),
+    title: 'Beachfront suite',
+    description:
+      'Beautiful beachfront suite located in Cancún hotel. Location consists of a large outdoor pool, parking, hotel convenience store, room service, and parking!',
+    image:
+      'https://res.cloudinary.com/tiny-house/image/upload/v1560646219/mock/San%20Fransisco/san-fransisco-listing-3_z7w2jh.jpg',
+    host: '5d378db94e84753160e08b56',
+    type: ListingType.Apartment,
+    address: '100 Punta Nizuc Rd., Shanghai, China',
+    country: 'China',
+    admin: 'Shanghai',
+    city: 'Shanghai',
+    bookings: [],
+    bookingsIndex: {},
+    price: 33012,
+    numOfGuests: 2,
+  },
+  {
+    _id: new ObjectId('5d378db94e84753160e08b54'),
+    title: 'Beachfront suite',
+    description:
+      'Luxurious beachfront suite located in Cancún hotel. Location consists of a large outdoor pool, parking, hotel convenience store, room service, and parking!',
+    image:
+      'https://res.cloudinary.com/tiny-house/image/upload/v1560646219/mock/San%20Fransisco/san-fransisco-listing-1_qzntl4.jpg',
+    host: '5d378db94e84753160e08b56',
+    type: ListingType.Apartment,
+    address: '100 Punta Nizuc Rd., Munich, Germany',
+    country: 'Germany',
+    admin: 'Munich',
+    city: 'Munich',
+    bookings: [],
+    bookingsIndex: {},
+    price: 53012,
+    numOfGuests: 5,
+  },
 ];
 const users: User[] = [
   {

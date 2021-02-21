@@ -51,7 +51,7 @@ export const typeDefs = gql`
     total: Int!
     result: [Booking!]!
   }
-  # user query type : income and booking optional
+  # user query type : income and booking optional are protected
   # resolve only the user access its bookings
   type User {
     id: ID!

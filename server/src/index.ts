@@ -8,8 +8,8 @@ import cookieParser from 'cookie-parser';
 const port = process.env.PORT;
 
 const mount = async (app: Application) => {
-  app.use(express.urlencoded({ extended: true, limit: '10kb' }));
-  app.use(express.json({ limit: '10kb' })); // limit body data
+  app.use(express.urlencoded({ extended: true, limit: '2mb' }));
+  app.use(express.json({ limit: '2mb' })); // limit body data
   app.use(cookieParser(process.env.SECRET));
   // resolve functions will interact with the db variable
   const db = await connectDatabase();
@@ -29,8 +29,6 @@ const mount = async (app: Application) => {
   app.listen(port, () => {
     console.log('DB Connected @ localhost:' + port);
   });
-  // const listings = await db.listings.find({}).toArray();
-  // console.log(listings);
 };
 
 mount(express());

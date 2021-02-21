@@ -21,17 +21,14 @@ const { Paragraph, Text, Title } = Typography;
 const PAGE_LIMIT = 8;
 
 export const Listings = ({ match }: RouteComponentProps<MatchParams>) => {
-  const locate = useLocation<any>();
-
-  console.log(locate.pathname.split('/')[2]);
   const [filter, setFilter] = useState(ListingsFilter.PRICE_LOW_TO_HIGH);
   const [page, setPage] = useState(1);
   const locationRef = useRef(match.params.location);
-  /*
-skipping the refetching query on page change  using apollo skip 
-    skip: locationRef.current !== match.params.location && page !== 1,
-*/
   const { loading, data, error } = useQuery<ListingsData, ListingsVariables>(LISTINGS, {
+    /*
+  skipping the refetching query on page change using apollo skip 
+  skip: locationRef.current !== match.params.location && page !== 1,
+  */
     skip: locationRef.current !== match.params.location && page !== 1,
 
     variables: {
@@ -41,6 +38,7 @@ skipping the refetching query on page change  using apollo skip
       page,
     },
   });
+  /* to reset the page to 1 if search changes */
   useEffect(() => {
     setPage(1);
     locationRef.current = match.params.location;
@@ -80,6 +78,7 @@ skipping the refetching query on page change  using apollo skip
         <List
           grid={{
             gutter: 8,
+            column: 4,
             xs: 1,
             sm: 2,
             lg: 4,
@@ -95,11 +94,11 @@ skipping the refetching query on page change  using apollo skip
     ) : (
       <div>
         <Paragraph>
-          It appears that no listings have yet been created for{' '}
+          It appears that no listings have yet been created for
           <Text mark>"{listingsRegion}"</Text>
         </Paragraph>
         <Paragraph>
-          Be the first person to create a <Link to='/host'>listing in this area</Link>!
+          Be the first one to create a <Link to='/host'>listing in this area</Link>!
         </Paragraph>
       </div>
     );

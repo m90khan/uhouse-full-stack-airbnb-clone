@@ -39,7 +39,7 @@ interface Props {
 const { Content } = Layout;
 const { Text, Title } = Typography;
 const { Item } = Form;
-export const Host = ({ viewer, form }: Props & any) => {
+export const Host = ({ viewer }: Props) => {
   const [imageLoading, setImageLoading] = useState(false);
   const [imageBase64Value, setImageBase64Value] = useState<string | null>(null);
 
@@ -57,14 +57,13 @@ export const Host = ({ viewer, form }: Props & any) => {
     },
   });
   const handleImageUpload = (info: UploadChangeParam) => {
-    // info object gives the status for the upload
+    // info object gives the status for the upload so the UploadChangeParam
     const { file } = info;
-    console.log(file);
-    // if (file.status === 'uploading') {
-    //   setImageLoading(true);
-    //   return;
-    // }
-    // if done is done upload and has property originFileBody which is the orifinal file object
+    if (file.status === 'uploading') {
+      setImageLoading(true);
+      return;
+    }
+    // if done is done upload and has property originFileBody which is the original file object
     if (file.status === 'done' && file.originFileObj) {
       getBase64Value(file.originFileObj, (imageBase64Value) => {
         setImageBase64Value(imageBase64Value);
@@ -73,7 +72,12 @@ export const Host = ({ viewer, form }: Props & any) => {
     }
   };
   const handleHostListing = (values: any) => {
-    const fullAddress = `${values.address}, ${values.city}, ${values.state}, ${values.postalCode}`;
+    const fullAddress = `${values.address},${values.city},${values.state},${values.country},${values.zipCode}`;
+    delete values.image;
+    delete values.city;
+    delete values.state;
+    delete values.country;
+    delete values.zipCode;
 
     const input = {
       ...values,
@@ -81,9 +85,6 @@ export const Host = ({ viewer, form }: Props & any) => {
       image: imageBase64Value,
       price: values.price * 100,
     };
-    delete input.city;
-    delete input.state;
-    delete input.postalCode;
 
     hostListing({
       variables: {
@@ -148,7 +149,7 @@ export const Host = ({ viewer, form }: Props & any) => {
 
         <Item
           label='Home Type'
-          name='Home Type'
+          name='type'
           rules={[
             {
               required: true,
@@ -169,7 +170,7 @@ export const Host = ({ viewer, form }: Props & any) => {
 
         <Item
           label='Max number of Guests'
-          name='maxGuests'
+          name='numOfGuests'
           rules={[
             {
               required: true,
@@ -183,7 +184,7 @@ export const Host = ({ viewer, form }: Props & any) => {
         <Item
           label='Title'
           extra='Max character count of 45'
-          name='Title'
+          name='title'
           rules={[
             {
               required: true,
@@ -197,7 +198,7 @@ export const Host = ({ viewer, form }: Props & any) => {
         <Item
           label='Description of listing'
           extra='Max character count of 400'
-          name='Description of listing'
+          name='description'
           rules={[
             {
               required: true,
@@ -214,7 +215,7 @@ export const Host = ({ viewer, form }: Props & any) => {
 
         <Item
           label='Address'
-          name='Address'
+          name='address'
           rules={[
             {
               required: true,
@@ -227,7 +228,7 @@ export const Host = ({ viewer, form }: Props & any) => {
 
         <Item
           label='City/Town'
-          name='City/Town'
+          name='city'
           rules={[
             {
               required: true,
@@ -240,7 +241,7 @@ export const Host = ({ viewer, form }: Props & any) => {
 
         <Item
           label='State/Province'
-          name='State/Province'
+          name='state'
           rules={[
             {
               required: true,
@@ -250,10 +251,21 @@ export const Host = ({ viewer, form }: Props & any) => {
         >
           <Input placeholder='California' />
         </Item>
-
+        <Item
+          label='Country'
+          name='country'
+          rules={[
+            {
+              required: true,
+              message: 'Please enter a country for your listing!',
+            },
+          ]}
+        >
+          <Input placeholder='Germany' />
+        </Item>
         <Item
           label='Zip/Postal Code'
-          name='Zip/Postal Code'
+          name='zipCode'
           rules={[
             {
               required: true,
@@ -266,7 +278,7 @@ export const Host = ({ viewer, form }: Props & any) => {
 
         <Item
           label='Image'
-          name='Image'
+          name='image'
           extra='Images have to be under 1MB in size and of type JPG or PNG'
         >
           <div className='host__form-image-upload'>
@@ -283,7 +295,6 @@ export const Host = ({ viewer, form }: Props & any) => {
               ) : (
                 <div>
                   {imageLoading ? <LoadingOutlined /> : <PlusOutlined />}
-                  {/* <Icon type={imageLoading ? 'loading' : 'plus'} /> */}
                   <div className='ant-upload-text'>Upload</div>
                 </div>
               )}
@@ -293,7 +304,7 @@ export const Host = ({ viewer, form }: Props & any) => {
 
         <Item
           label='Price'
-          name='Price'
+          name='price'
           extra='All prices in $USD/day'
           rules={[
             {
@@ -315,17 +326,10 @@ export const Host = ({ viewer, form }: Props & any) => {
   );
 };
 
-// HOF for form wrapper : HoST component to wrap
-// export const WrappedHost = Form.create<Props & FormComponentProps>({
-//   name: 'host_form',
-// })(Host);
-
 const beforeImageUpload = (file: File) => {
   const fileIsValidImage = file.type === 'image/jpeg' || file.type === 'image/png';
   const fileIsValidSize = file.size / 1024 / 1024 < 1;
 
-  console.log(file);
-  console.log(fileIsValidImage, fileIsValidSize);
   if (!fileIsValidImage) {
     displayErrorMessage('You can only upload valid JPG or PNG files!');
     return false;
@@ -340,14 +344,13 @@ const beforeImageUpload = (file: File) => {
 };
 
 const getBase64Value = (
-  img: File | Blob, // uload image can rither be a file or file like blob
+  img: File | Blob, // upload image can rither be a file or file like object blob
   callback: (imageBase64Value: string) => void
 ) => {
   /*
   FileReadeer allows to read blocks of a file
   */
   const reader = new FileReader();
-  console.log(reader);
   reader.readAsDataURL(img); // read the contents of the img file
   reader.onload = () => {
     callback(reader.result as string);
