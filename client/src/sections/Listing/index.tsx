@@ -117,11 +117,11 @@ export const Listing = ({ viewer }: Props) => {
         <Col xs={24} lg={14}>
           {listingDetailsElement}
           {listingBookingsElement}
-        </Col>{' '}
+        </Col>
         <Col xs={24} lg={10}>
           {listingCreateBookingElement}
         </Col>
-      </Row>{' '}
+      </Row>
       {listingCreateBookingModalElement}
     </Content>
   );

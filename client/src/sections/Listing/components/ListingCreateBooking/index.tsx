@@ -1,11 +1,11 @@
 import React from 'react';
-import { Button, Card, DatePicker, Divider, Typography } from 'antd';
+import { Button, Card, DatePicker, Divider, Tag, Typography } from 'antd';
 import moment, { Moment } from 'moment';
 import { Listing as ListingData } from '../../../../lib/graphql/queries/Listing/__generated__/Listing';
 import { displayErrorMessage, formatListingPrice } from '../../../../lib/utils';
 import { Viewer } from '../../../../lib/types';
 import { BookingsIndex } from './types';
-const { Paragraph, Text, Title } = Typography;
+const { Paragraph, Title } = Typography;
 
 interface Props {
   viewer: Viewer;
@@ -58,9 +58,11 @@ export const ListingCreateBooking = ({
     if (checkInDate && selectedCheckOutDate) {
       if (moment(selectedCheckOutDate).isBefore(checkInDate, 'days')) {
         return displayErrorMessage(
-          `Wrong: Check out date cannot be picked prior to check in date`
+          `Oh no: Check out date cannot be picked prior to check-in date`
         );
       }
+
+      // validate if booking date is overlaps with another booked date
 
       let dateCursor = checkInDate;
 
@@ -77,7 +79,7 @@ export const ListingCreateBooking = ({
           bookingsIndexJSON[year][month][day]
         ) {
           return displayErrorMessage(
-            "You can't book a period of time that overlaps existing bookings. Please try again!"
+            'You can not book a period of time that overlaps existing bookings. Please try again!'
           );
         }
       }
@@ -90,7 +92,6 @@ export const ListingCreateBooking = ({
   const checkInInputDisabled = !viewer.id || viewerIsHost || !host.hasWallet;
   const checkOutInputDisabled = checkInInputDisabled || !checkInDate;
   const buttonDisabled = checkOutInputDisabled || !checkInDate || !checkOutDate;
-
   let buttonMessage = "You won't be charged yet";
   if (!viewer.id) {
     buttonMessage = 'You have to be signed in to book a listing!';
@@ -150,12 +151,14 @@ export const ListingCreateBooking = ({
         >
           Request to book!
         </Button>
-        <Text type='secondary' mark>
-          {buttonMessage} <br />
-        </Text>
-        <Text mark>
-          <Text strong>Note: </Text>Booking is non-refundable 48 hours before the check-in
-        </Text>
+        <Paragraph>
+          <Tag color='blue'> {buttonMessage}</Tag>
+        </Paragraph>
+        <Paragraph>
+          <Tag color='lime'>
+            <strong>Note: </strong> Booking is non-refundable 24 hours pre-checkin
+          </Tag>
+        </Paragraph>
       </Card>
     </div>
   );

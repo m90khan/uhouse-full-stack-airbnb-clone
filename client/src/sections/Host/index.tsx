@@ -8,6 +8,8 @@ import {
   InputNumber,
   Layout,
   Radio,
+  Row,
+  Tag,
   Typography,
   Upload,
 } from 'antd';
@@ -31,6 +33,7 @@ import {
   PlusOutlined,
   BankOutlined,
 } from '@ant-design/icons';
+import Paragraph from 'antd/lib/typography/Paragraph';
 
 interface Props {
   viewer: Viewer;
@@ -71,6 +74,7 @@ export const Host = ({ viewer }: Props) => {
       });
     }
   };
+
   const handleHostListing = (values: any) => {
     const fullAddress = `${values.address},${values.city},${values.state},${values.country},${values.zipCode}`;
     delete values.image;
@@ -141,6 +145,9 @@ export const Host = ({ viewer }: Props) => {
           <Title level={3} className='host__form-title'>
             Hi! Let's get started listing your place.
           </Title>
+          <Paragraph className=' '>
+            <Tag color='blue'>AirHouse Fee Charges ~8% </Tag>
+          </Paragraph>
           <Text type='secondary'>
             In this form, we'll collect some basic and additional information about your
             listing.
@@ -287,7 +294,7 @@ export const Host = ({ viewer }: Props) => {
               listType='picture-card'
               showUploadList={false}
               action='https://www.mocky.io/v2/5cc8019d300000980a055e76'
-              beforeUpload={beforeImageUpload}
+              // beforeUpload={beforeImageUpload}
               onChange={handleImageUpload}
             >
               {imageBase64Value ? (

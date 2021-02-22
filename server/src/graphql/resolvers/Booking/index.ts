@@ -20,6 +20,7 @@ const resolveBookingsIndex = (
     const m = dateCursor.getUTCMonth();
     const d = dateCursor.getUTCDate();
 
+    // base on datecursor, we check if value exist or not then return boolean
     if (!newBookingsIndex[y]) {
       newBookingsIndex[y] = {};
     }
@@ -29,7 +30,7 @@ const resolveBookingsIndex = (
     }
 
     if (!newBookingsIndex[y][m][d]) {
-      newBookingsIndex[y][m][d] = true;
+      newBookingsIndex[y][m][d] = true; // booked
     } else {
       throw new Error("selected dates can't overlap dates that have already been booked");
     }
@@ -82,6 +83,7 @@ export const bookingResolvers: IResolvers = {
         );
 
         // get total price
+        // total price is multiplication of checkIn and checkOut
         const totalPrice =
           listing.price *
           ((checkOutDate.getTime() - checkInDate.getTime()) / 86400000 + 1);
@@ -150,14 +152,14 @@ export const bookingResolvers: IResolvers = {
     },
     listing: (
       booking: Booking,
-      _args: {},
+      _args: unknown,
       { db }: { db: Database }
     ): Promise<Listing | null> => {
       return db.listings.findOne({ _id: booking.listing });
     },
     tenant: (
       booking: Booking,
-      _args: {},
+      _args: unknown,
       { db }: { db: Database }
     ): Promise<Booking | null> => {
       return db.users.findOne({ _id: booking.tenant });

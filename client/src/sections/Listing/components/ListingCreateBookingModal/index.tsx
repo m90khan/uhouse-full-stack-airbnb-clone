@@ -1,7 +1,7 @@
 import React from 'react';
 import { useMutation } from '@apollo/react-hooks';
 import { CardElement, injectStripe, ReactStripeElements } from 'react-stripe-elements';
-import { Button, Divider, Modal, Typography } from 'antd';
+import { Button, Divider, Modal, Tag, Typography } from 'antd';
 import { KeyOutlined } from '@ant-design/icons';
 
 import moment, { Moment } from 'moment';
@@ -60,6 +60,7 @@ export const ListingCreateBookingModal = ({
   });
   const daysBooked = checkOutDate.diff(checkInDate, 'days') + 1;
   const listingPrice = price * daysBooked;
+  // const airHouseFee = 0.08 * listingPrice;
 
   const handleCreateBooking = async () => {
     if (!stripe) {
@@ -100,7 +101,7 @@ export const ListingCreateBookingModal = ({
             <KeyOutlined />{' '}
           </Title>
           <Title level={3} className='listing-boooking-modal__intro-title'>
-            Book your trip
+            Book your trip!
           </Title>
           <Paragraph>
             Enter your payment information to book the listing from the dates between{' '}
@@ -122,6 +123,7 @@ export const ListingCreateBookingModal = ({
             {formatListingPrice(price, false)} * {daysBooked} days ={' '}
             <Text strong>{formatListingPrice(listingPrice, false)}</Text>
           </Paragraph>
+
           <Paragraph className='listing-booking-modal__charge-summary-total'>
             Total = <Text mark>{formatListingPrice(listingPrice, false)}</Text>
           </Paragraph>
@@ -138,7 +140,7 @@ export const ListingCreateBookingModal = ({
             loading={loading}
             onClick={handleCreateBooking}
           >
-            Book
+            Book Now
           </Button>
         </div>
       </div>
