@@ -155,7 +155,7 @@ export const ListingCreateBooking = ({
           <Tag color='blue'> {buttonMessage}</Tag>
         </Paragraph>
         <Paragraph>
-          <Tag color='lime'>
+          <Tag color='blue'>
             <strong>Note: </strong> Booking is non-refundable 24 hours pre-checkin
           </Tag>
         </Paragraph>
