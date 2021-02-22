@@ -68,8 +68,16 @@ export const bookingResolvers: IResolvers = {
         }
         // date validation
         // convert date string to date
+        const today = new Date();
         const checkInDate = new Date(checkIn);
         const checkOutDate = new Date(checkOut);
+        if (checkInDate.getTime() > today.getTime() + 90 * 86400000) {
+          throw new Error("check in date can't be more than 90 days from today");
+        }
+
+        if (checkOutDate.getTime() > today.getTime() + 90 * 86400000) {
+          throw new Error("check out date can't be more than 90 days from today");
+        }
 
         if (checkOutDate < checkInDate) {
           throw new Error("check out date can't be before check in date");

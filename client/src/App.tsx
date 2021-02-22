@@ -23,6 +23,7 @@ import {
 } from './lib/graphql/mutations/Login/__generated__/LogIn';
 import { AppHeaderSkeleton, ErrorBanner } from './lib/components';
 import Footer from './sections/Footer';
+import { ScrollTop } from './lib/utils';
 
 // viewer for access
 
@@ -82,6 +83,8 @@ const AppRouter = () => {
           <Affix offsetTop={0} className='app__affix-header'>
             <AppHeader viewer={viewer} setViewer={setViewer} />
           </Affix>
+          <ScrollTop />
+
           <Switch>
             <Route path='/' exact>
               <Home />

@@ -29,6 +29,7 @@ export const Home = () => {
       limit: PAGE_LIMIT,
       page: PAGE_NUMBER,
     },
+    fetchPolicy: 'cache-and-network',
   });
   const { loading: lowLoading, data: LowData } = useQuery<
     ListingsData,
@@ -39,6 +40,7 @@ export const Home = () => {
       limit: PAGE_LIMIT,
       page: PAGE_NUMBER,
     },
+    fetchPolicy: 'cache-and-network',
   });
   const onSearch = (value: string) => {
     const trimmedValue = value.trim();
