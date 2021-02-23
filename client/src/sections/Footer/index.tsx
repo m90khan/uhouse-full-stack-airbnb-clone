@@ -1,6 +1,7 @@
 import React from 'react';
-import { Row, Col, Tag } from 'antd';
+import { Row, Col, Tag, Divider } from 'antd';
 import { footer } from './data';
+
 import {
   TwitterOutlined,
   YoutubeOutlined,
@@ -13,33 +14,16 @@ export default function Footer() {
       <div className='footer-wrap page'>
         <Row>
           {footer.map((foot: any, index: any) => (
-            <Col
-              key={index.toString()}
-              lg={8}
-              md={12}
-              xs={24}
-              className='footer-item-col'
-            >
-              <div className='footer-item' key={index.toString()}>
-                <h2 key={index.toString()}>
-                  {/* {foot.icon && (
-                    <img
-                      style={{
-                        width: '20%',
-                        height: '50%',
-                        filter: 'blur(5)',
-                        marginRight: '.5rem',
-                      }}
-                      src={foot.icon}
-                      alt='logo'
-                    />
-                  )} */}
-
-                  {foot.title}
-                </h2>
+            <Col key={index} lg={6} md={12} xs={24} className='footer-item-col'>
+              <div className='footer-item' key={index}>
+                <h2 key={index.toString()}>{foot.title}</h2>
                 {foot.children.map((child: any) => (
                   <div key={child.link}>
-                    <a target='_blank ' href={child.link}>
+                    <a
+                      target='_blank '
+                      href={child.link}
+                      style={child.title === 'AirHouse' ? { fontWeight: 'bold' } : {}}
+                    >
                       {child.title}
                     </a>
                   </div>
@@ -51,7 +35,7 @@ export default function Footer() {
       </div>
       <div className='footer-bottom' style={{ textAlign: 'center' }}>
         <Row>
-          <Col lg={24} xs={24}>
+          <Col lg={24} xs={24} className='footer-item-col'>
             <Tag icon={<TwitterOutlined />} color='#55acee'>
               Twitter
             </Tag>
@@ -66,7 +50,7 @@ export default function Footer() {
             </Tag>
           </Col>
           <Col lg={24} xs={24} style={{ marginTop: '.5rem' }}>
-            <span>Copyright © 2019 - {new Date().getFullYear()}</span>
+            <span>Copyright © 2020 - {new Date().getFullYear()}</span>
           </Col>
         </Row>
       </div>

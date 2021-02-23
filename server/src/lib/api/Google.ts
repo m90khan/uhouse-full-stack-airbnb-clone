@@ -92,7 +92,6 @@ export const Google = {
     return parseAddress(res.data.results[0].address_components);
   },
 };
-
 // {
 //   "results" : [
 //      {

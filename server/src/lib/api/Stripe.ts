@@ -32,7 +32,7 @@ export const Stripe = {
         application_fee_amount: Math.round(amount * 0.08),
       },
       {
-        stripe_account: stripeAccount,
+        stripeAccount: stripeAccount,
       }
     );
 

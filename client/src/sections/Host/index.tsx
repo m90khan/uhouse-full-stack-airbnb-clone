@@ -1,4 +1,4 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { useMutation } from '@apollo/react-hooks';
 import {
@@ -8,7 +8,6 @@ import {
   InputNumber,
   Layout,
   Radio,
-  Row,
   Tag,
   Typography,
   Upload,
@@ -294,7 +293,7 @@ export const Host = ({ viewer }: Props) => {
               listType='picture-card'
               showUploadList={false}
               action='https://www.mocky.io/v2/5cc8019d300000980a055e76'
-              // beforeUpload={beforeImageUpload}
+              beforeUpload={beforeImageUpload}
               onChange={handleImageUpload}
             >
               {imageBase64Value ? (

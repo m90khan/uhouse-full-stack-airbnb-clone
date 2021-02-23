@@ -68,6 +68,7 @@ export const listingResolvers: IResolvers = {
           total: 0,
           result: [],
         };
+
         // if (location) {
         //   const { country, admin, city } = await Google.geoCode(location);
 
@@ -85,7 +86,6 @@ export const listingResolvers: IResolvers = {
         // }
 
         if (location) {
-          console.log(location);
           const wordCapitalize = location.split(' ');
 
           const strData = wordCapitalize
@@ -95,7 +95,6 @@ export const listingResolvers: IResolvers = {
             .join(' ');
 
           query.city = strData;
-
           data.region = `${strData}`;
         }
 
@@ -119,7 +118,6 @@ export const listingResolvers: IResolvers = {
 
         return data;
       } catch (error) {
-        console.log(error);
         throw new Error(`Failed to query listings: ${error}`);
       }
     },

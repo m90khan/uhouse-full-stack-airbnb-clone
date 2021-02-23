@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 // to access the match props of a certain route and assign as generic
-import { RouteComponentProps, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 import { Col, Layout, Row } from 'antd';
 import { USER } from '../../lib/graphql/queries';
@@ -97,12 +97,7 @@ export const User = ({ viewer, setViewer }: Props) => {
     <Content className='user'>
       {stripeErrorBanner}
 
-      <Row
-        gutter={12}
-        // style={{ display: 'flex', justifyContent: 'space-between' }}
-        typeof='flex'
-        justify='space-between'
-      >
+      <Row gutter={12} typeof='flex' justify='space-between'>
         <Col xs={24}>{userProfileElement}</Col>
         <Col xs={24}>
           {userListingsElement}

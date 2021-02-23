@@ -1,7 +1,7 @@
 import React from 'react';
 import { useMutation } from '@apollo/react-hooks';
 import { CardElement, injectStripe, ReactStripeElements } from 'react-stripe-elements';
-import { Button, Divider, Modal, Tag, Typography } from 'antd';
+import { Button, Divider, Modal, Typography } from 'antd';
 import { KeyOutlined } from '@ant-design/icons';
 
 import moment, { Moment } from 'moment';

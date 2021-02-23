@@ -1,34 +1,36 @@
-import logo from '../AppHeader/assets/airhouse-logo.png';
 export const footer = [
   {
     title: 'AirHouse',
-    icon: `${logo}`,
     children: [
-      { title: 'About', link: 'https://ant.design' },
-      { title: 'Contact', link: 'https://antv.alipay.com' },
-      {
-        title: 'Blog',
-
-        link: 'https://fengdie.alipay-eco.com/intro',
-      },
+      { title: 'About', link: '/about' },
+      { title: 'Contact', link: '/contact' },
+      { title: 'Blog', link: '/blog' },
     ],
   },
   {
-    title: 'Top Detination',
+    title: 'Account',
     children: [
-      { title: 'Dubai', link: 'https://open.alipay.com' },
-      { title: 'Los Angeles', link: 'https://xcloud.alipay.com' },
-      { title: 'London', link: 'https://www.cloud.alipay.com' },
-      { title: 'Berlin', link: 'https://www.cloud.alipay.com' },
+      { title: 'Profile', link: '/profile' },
+      { title: 'Host a listing', link: '/host' },
+      { title: 'Bookings', link: '/profile/#bookings' },
+      { title: 'Listings', link: '/profile/#listings' },
+    ],
+  },
+  {
+    title: 'Top Destinations',
+    children: [
+      { title: 'Toronto', link: '/listings/toronto' },
+      { title: 'Dubai', link: '/listings/dubai' },
+      { title: 'Los Angeles', link: '/listings/los%20angeles' },
+      { title: 'London', link: '/listings/london' },
     ],
   },
   {
     title: 'Links',
     children: [
-      { title: 'Refund Policy', link: 'https://atec.antfin.com' },
-
-      { title: 'Privacy Policy', link: 'https://atec.antfin.com' },
-      { title: 'Terms and Conditions', link: 'https://seeconf.alipay.com' },
+      { title: 'Refund Policy', link: '/refund-policy' },
+      { title: 'Privacy Policy', link: '/privacy-policy' },
+      { title: 'Terms and Conditions', link: '/terms' },
     ],
   },
 ];

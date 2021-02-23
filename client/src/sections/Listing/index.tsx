@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { RouteComponentProps, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 import { Col, Layout, Row } from 'antd';
 import { Moment } from 'moment';

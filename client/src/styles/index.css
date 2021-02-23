@@ -663,11 +663,12 @@ html {
 }
 
 .footer {
-  background: #3367d6;
   color: #fff;
+  overflow-x: hidden;
 }
 .footer-wrap {
   padding: 2rem 8rem;
+  background: #1890ff;
 }
 .footer-wrap .footer-item {
   display: inline-block;
@@ -693,12 +694,13 @@ html {
   border-top: 1px solid rgba(255, 255, 255, 0.15);
   padding: 2rem 8rem;
   line-height: 22px;
+  background: #1890ff;
 
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.829);
 }
 .footer-bottom a {
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.829);
 }
 .footer-bottom {
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.829);
 }

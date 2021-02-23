@@ -97,7 +97,9 @@ const AppRouter = () => {
                 <Listing viewer={viewer} />
               </Elements>
             </Route>
-            <Route path='/listings/:location?' component={Listings} exact />
+            <Route path='/listings/:location?' exact>
+              <Listings />
+            </Route>
             <Route exact path='/login'>
               <Login setViewer={setViewer} />
             </Route>
@@ -107,9 +109,11 @@ const AppRouter = () => {
             <Route exact path='/stripe'>
               <Stripe viewer={viewer} setViewer={setViewer} />
             </Route>
-            <Route component={NotFound} />
+            <Route>
+              <NotFound />
+            </Route>
           </Switch>
-          {/* <Footer /> */}
+          <Footer />
         </Layout>
       </Router>
     </StripeProvider>
